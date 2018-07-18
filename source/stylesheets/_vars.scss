@@ -1,0 +1,36 @@
+// colors
+$default-text-color     : #4C4E4D;
+$theme-color            : #2980b9;
+
+// breakpoints
+$break_xsmall         : 400px;
+$break_small          : 600px;
+$break_medium_small   : 728px;
+$break_medium         : 880px;
+$break_large_medium   : 950px;
+$break_large          : 1080px;
+$break_xlarge_large   : 1200px;
+$break_xlarge         : 1500px;
+$break_xxlarge        : 1600px;
+
+// layout
+$default-width          : 1080px;
+$gutter-vertical        : 15px;
+$gutter-horizontal      : 25px;
+$sidebar-width          : 325px;
+$sidebar-width-narrow   : 160px;
+
+$default-font-size    : 16px;
+$default-line-height  : (25px/$default-font-size);
+
+$text-font-secondary: Menlo, Monaco, Consolas, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
+
+@function wva-pair($multiplier) {
+  $ratio: 2.2;
+  $cross_axis_unit: 1 / ($ratio + 1); // solve for ratio(x) + x = 1
+  $main_axis_unit: 1 - $cross_axis_unit;
+  $wva-pair:
+    calc(#{$multiplier * $main_axis_unit}vh + #{$multiplier * $cross_axis_unit}vw)
+    calc(#{$multiplier * $cross_axis_unit}vh + #{$multiplier * $main_axis_unit}vw);
+  @return $wva-pair;
+}

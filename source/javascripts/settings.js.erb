@@ -1,0 +1,76 @@
+var MEME_SETTINGS = {
+  creditText: '', // Default "credits" text.
+  creditSize: 12, // Font size for credit text.
+  downloadName: 'share', // The name of the downloaded image file (will have a ".png" extension added).
+  fontColor: 'white', // Universal font color.
+  fontColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+
+  // Universal font family for texts:
+  // Note that you'll need to included quoted font names as you would in CSS, ie: '"Knockout 28 B"'.
+  fontFamily: 'Klima',
+  // Font family options: set to empty array to disable font selector.
+  // These options may also be formatted as {text:'Knockout', value:'"Knockout 28 B"'}.
+  fontFamilyOpts: ['Klima', 'Graph FF Condensed', 'Katwijk Mono'],
+
+  // Font size of main headline:
+  fontSize: 30,
+  // Font size options: set to empty array to disable font-size selector.
+  fontSizeOpts: [
+    {text: 'Small text', value: 14},
+    {text: 'Medium text', value: 24},
+    {text: 'Large text', value: 36}
+  ],
+
+  headlineText: 'Write your own headline', // Default headline text.
+  imageScale: 1, // Background image scale.
+  imageSrc: '', // Default background image path. MUST reside on host domain, or use base64 data.
+  overlayAlpha: 0.65, // Opacity of image overlay.
+
+  // Image overlay color, or blank ('') for no overlay:
+  overlayColor: '#17292e',
+  // Overlay color options: set to empty array to disable overlay options selector.
+  overlayColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+  paddingRatio: 0.1, // Percentage of canvas width to use as edge padding.
+
+  // Background color, or blank ('') for no overlay. Takes precedent over overlay.
+  backgroundColor: '',
+  // Background color options: set to empty array to disable overlay options selector.
+  backgroundColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+
+
+  // Text alignment: valid settings are "left", "center", and "right".
+  textAlign: 'left',
+  // Text alignment options: set to empty array to disable alignment picker.
+  textAlignOpts: [
+    {text: 'Left-aligned', value: 'left'},
+    {text: 'Center-aligned', value: 'center'},
+    {text: 'Right-aligned', value: 'right'}
+  ],
+
+  textShadow: false, // Text shadow toggle.
+  textShadowEdit: true, // Toggles text shadow control within the editor.
+  watermarkAlpha: 1, // Opacity of watermark image.
+  watermarkMaxWidthRatio: 0.115, // Maximum allowed width of watermark (percentage of total canvas width).
+
+  // Path to the watermark image source, or blank for no watermark:
+  // Alternatively, use '<%= asset_data_uri("vox.png") %>' to populate the watermark with base64 data, avoiding Cross-Origin issues.
+  watermarkSrc: (localStorage && localStorage.getItem('meme_watermark')) || '<%= image_path("350-logo-v3-white.png") %>',
+
+  // Watermark image options: set to empty array to disable watermark picker.
+  // NOTE: only populate the "data" attributes with base64 data when concerned about Cross-Origin requests...
+  // Otherwise, just leave "data" attributes blank and allow images to load from your server.
+  watermarkOpts: [
+    {text: '350 (white on transparent)', value: '<%= image_path("350-logo-v3-white.png") %>', data: '<%= asset_data_uri("350-logo-v3-white.png") %>'},
+    {text: '350 (white on blue)', value: '<%= image_path("350-logo-v3.png") %>', data: '<%= asset_data_uri("350-logo-v3.png") %>'}
+  ],
+
+  width: 755, // Canvas rendering width.
+  // width: 755 // Canvas rendering width.
+  aspectRatio: 'twitter',
+  aspectRatioOpts: [
+    {text: 'Twitter (1024 x 512px)', value: 'twitter'},
+    {text: 'Instagram (1080 x 1080px)', value: 'instagram'},
+    {text: 'Facebook (1200 x 630px)', value: 'facebook'},
+    {text: 'Pinterest (736 x 1128px)', value: 'pinterest'}
+  ]
+};

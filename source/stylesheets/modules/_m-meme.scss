@@ -1,0 +1,18 @@
+$m: '.m-meme';
+
+body {
+  margin:0;
+  padding:0;}
+
+#{$m} {
+  display:grid;
+  grid-template-areas:
+    'editor'
+    'canvas';
+
+  @media screen and (min-width: 700px) {
+    grid-template-areas:
+      'editor canvas';
+    grid-template-columns:33vw 66vw;
+  }
+}
