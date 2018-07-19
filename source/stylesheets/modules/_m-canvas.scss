@@ -1,6 +1,7 @@
 $m: '.m-canvas';
 
 #{$m} {
+  background:#f9fafb;
   grid-area:canvas;
   padding:wva-pair(3);
 
@@ -13,7 +14,8 @@ $m: '.m-canvas';
     background: #fcfcfc;
 
     canvas {
-      max-height:calc(100vh - 150px);
+      border:1px solid rgba(0,0,0,0.1);
+      max-height:calc(100vh - 120px);
       max-width: 100% !important;
     }
   }

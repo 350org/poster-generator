@@ -1,15 +1,15 @@
 <form class="m-editor" id="meme-editor-view">
-  <h1 id="m-title">350 Image Builder</h1>
+  <h1 id="m-title"><%= current_page.data.title %></h1>
 
   <div id="editor-options-image" class="content-pane editor-options-section">
-    <h2 class="editor-section-header">Image</h2>
+    <h2 class="editor-section-header">Document</h2>
 
-    <h3>Size / Aspect Ratio</h3>
+    <h3>Paper Size</h3>
     <select class="aspect-ratio" id="aspect-ratio">
-      <option value="" disabled>Aspect ratio</option>
+      <option value="" disabled>Paper Size</option>
     </select>
 
-    <h3>Image File</h3>
+    <!-- <h3>Image File</h3>
     <div class="dropzone" id="dropzone">Drop Image Here</div>
     <input type="file" id="loadinput"></input>
 
@@ -52,7 +52,7 @@
       <ul class="checkbox-group">
         <li><label><input type="radio" name="background-color" value=""> None</label></li>
       </ul>
-    </div>
+    </div> -->
 
     <!-- <select class="watermark" id="watermark">
       <option value="" disabled>Select a watermark</option>
@@ -65,8 +65,15 @@
 
   <div id="editor-options-text" class="content-pane editor-options-section">
     <h2 class="editor-section-header">Text</h2>
+
     <h3 style="display:none;"><label for="headline">Headline</label></h3>
     <textarea id="headline" name="headline" type="text" value=""></textarea>
+
+    <h3 style="display:none;"><label for="date-time">Date/Time</label></h3>
+    <textarea id="date-time" name="date-time" type="text" value=""></textarea>
+
+    <h3 style="display:none;"><label for="date-time">Website URL</label></h3>
+    <textarea id="website-url" name="website-url" type="text" value=""></textarea>
 
     <h3><label for="font-size">Text Size</label></h3>
     <input id="font-size" type="range" max="64" min="18" step=".33" value="24">

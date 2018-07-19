@@ -2,7 +2,7 @@ var MEME_SETTINGS = {
   creditText: '', // Default "credits" text.
   creditSize: 12, // Font size for credit text.
   downloadName: 'share', // The name of the downloaded image file (will have a ".png" extension added).
-  fontColor: 'white', // Universal font color.
+  fontColor: '#17292e', // Universal font color.
   fontColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
 
   // Universal font family for texts:
@@ -22,18 +22,20 @@ var MEME_SETTINGS = {
   ],
 
   headlineText: 'Write your own headline', // Default headline text.
+  dateTimeText: 'Monday, January 1 2020 – 8pm',
+  websiteUrlText: 'myeventurl.org',
   imageScale: 1, // Background image scale.
   imageSrc: '', // Default background image path. MUST reside on host domain, or use base64 data.
   overlayAlpha: 0.65, // Opacity of image overlay.
 
   // Image overlay color, or blank ('') for no overlay:
-  overlayColor: '#17292e',
+  overlayColor: '',
   // Overlay color options: set to empty array to disable overlay options selector.
   overlayColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
-  paddingRatio: 0.1, // Percentage of canvas width to use as edge padding.
+  paddingRatio: 0.12, // Percentage of canvas width to use as edge padding.
 
   // Background color, or blank ('') for no overlay. Takes precedent over overlay.
-  backgroundColor: '',
+  backgroundColor: '#ffffff',
   // Background color options: set to empty array to disable overlay options selector.
   backgroundColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
 
@@ -66,11 +68,11 @@ var MEME_SETTINGS = {
 
   width: 755, // Canvas rendering width.
   // width: 755 // Canvas rendering width.
-  aspectRatio: 'twitter',
+  aspectRatio: 'us-letter',
   aspectRatioOpts: [
-    {text: 'Twitter (1024 x 512px)', value: 'twitter'},
-    {text: 'Instagram (1080 x 1080px)', value: 'instagram'},
-    {text: 'Facebook (1200 x 630px)', value: 'facebook'},
-    {text: 'Pinterest (736 x 1128px)', value: 'pinterest'}
+    {text: 'US Letter (8.5x11")', value: 'us-letter'},
+    {text: 'US Flyer (11x17")', value: 'us-tabloid'},
+    {text: 'A4 (210 x 297mm)', value: 'a4'},
+    {text: 'A3 (297 x 420mm)', value: 'a3'}
   ]
 };

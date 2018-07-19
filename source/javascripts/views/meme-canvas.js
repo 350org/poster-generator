@@ -40,17 +40,17 @@ MEME.MemeCanvasView = Backbone.View.extend({
     var padding = Math.round(d.width * d.paddingRatio);
 
     switch (d.aspectRatio) {
-      case "twitter":
-        d.width = 1024, d.height = 512;
+      case "us-letter":
+        d.width = 824, d.height = 1060;
         break;
-      case "facebook":
-        d.width = 1200, d.height = 630;
+      case "us-tabloid":
+        d.width = 1060, d.height = 1620;
         break;
-      case "instagram":
-        d.width = 1080, d.height = 1080;
+      case "a4":
+        d.width = 820, d.height = 1100;
         break;
-      case "pinterest":
-        d.width = 736, d.height = 1128
+      case "a3":
+        d.width = 1100, d.height = 1580;
     }
 
     // Reset canvas display:
@@ -96,29 +96,19 @@ MEME.MemeCanvasView = Backbone.View.extend({
       }
     }
 
-    function renderHeadline(ctx) {
+    function renderHeadlineText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = padding;
+      var y = (1.5 * padding);
 
       ctx.font = d.fontSize +'pt '+ d.fontFamily;
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
-      // Text shadow:
-      if (d.textShadow) {
-        ctx.shadowColor = "#666";
-        ctx.shadowOffsetX = -2;
-        ctx.shadowOffsetY = 1;
-        ctx.shadowBlur = 10;
-      }
-
       // Text alignment:
       if (d.textAlign == 'center') {
         ctx.textAlign = 'center';
         x = d.width / 2;
-        y = d.height - d.height / 1.5;
-        maxWidth = d.width - d.width / 3;
 
       } else if (d.textAlign == 'right' ) {
         ctx.textAlign = 'right';
@@ -129,6 +119,88 @@ MEME.MemeCanvasView = Backbone.View.extend({
       }
 
       var words = d.headlineText.split(' ');
+      var line  = '';
+
+      for (var n = 0; n < words.length; n++) {
+        var testLine  = line + words[n] + ' ';
+        var metrics   = ctx.measureText( testLine );
+        var testWidth = metrics.width;
+
+        if (testWidth > maxWidth && n > 0) {
+          ctx.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += Math.round(d.fontSize * 1.9);
+        } else {
+          line = testLine;
+        }
+      }
+
+      ctx.fillText(line, x, y);
+      ctx.shadowColor = 'transparent';
+    }
+
+    function renderDateTimeText(ctx) {
+      var maxWidth = Math.round(d.width * 0.75);
+      var x = padding;
+      var y = (1.5 * padding) + ( 1 * (d.height / 3) );
+
+      ctx.font = d.fontSize +'pt '+ d.fontFamily;
+      ctx.fillStyle = d.fontColor;
+      ctx.textBaseline = 'top';
+
+      // Text alignment:
+      if (d.textAlign == 'center') {
+        ctx.textAlign = 'center';
+        x = d.width / 2;
+      } else if (d.textAlign == 'right' ) {
+        ctx.textAlign = 'right';
+        x = d.width - padding;
+      } else {
+        ctx.textAlign = 'left';
+      }
+
+      var words = d.dateTimeText.split(' ');
+      var line  = '';
+
+      for (var n = 0; n < words.length; n++) {
+        var testLine  = line + words[n] + ' ';
+        var metrics   = ctx.measureText( testLine );
+        var testWidth = metrics.width;
+
+        if (testWidth > maxWidth && n > 0) {
+          ctx.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += Math.round(d.fontSize * 1.9);
+        } else {
+          line = testLine;
+        }
+      }
+
+      ctx.fillText(line, x, y);
+      ctx.shadowColor = 'transparent';
+    }
+
+    function renderWebsiteUrlText(ctx) {
+      var maxWidth = Math.round(d.width * 0.75);
+      var x = padding;
+      var y = (1.5 * padding) + ( 2 * (d.height / 3) );
+
+      ctx.font = d.fontSize +'pt '+ d.fontFamily;
+      ctx.fillStyle = d.fontColor;
+      ctx.textBaseline = 'baseline';
+
+      // Text alignment:
+      if (d.textAlign == 'center') {
+        ctx.textAlign = 'center';
+        x = d.width / 2;
+      } else if (d.textAlign == 'right' ) {
+        ctx.textAlign = 'right';
+        x = d.width - padding;
+      } else {
+        ctx.textAlign = 'left';
+      }
+
+      var words = d.websiteUrlText.split(' ');
       var line  = '';
 
       for (var n = 0; n < words.length; n++) {
@@ -182,7 +254,9 @@ MEME.MemeCanvasView = Backbone.View.extend({
     renderBackground(ctx);
     renderOverlay(ctx);
     renderBackgroundColor(ctx);
-    renderHeadline(ctx);
+    renderHeadlineText(ctx);
+    renderDateTimeText(ctx);
+    renderWebsiteUrlText(ctx);
     renderCredit(ctx);
     renderWatermark(ctx);
 

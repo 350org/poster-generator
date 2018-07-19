@@ -122,8 +122,11 @@ MEME.MemeEditorView = Backbone.View.extend({
 
   render: function() {
     var d = this.model.toJSON();
+    // text inputs
     this.$('#headline').val(d.headlineText);
-    this.$('#credit').val(d.creditText);
+    this.$('#date-time').val(d.dateTimeText);
+    this.$('#website-url').val(d.websiteUrlText);
+
     this.$('#aspect-ratio').val(d.aspectRatio);
     this.$('#watermark').val(d.watermarkSrc);
     this.$("#watermark-alpha").val(d.watermarkAlpha);
@@ -140,6 +143,8 @@ MEME.MemeEditorView = Backbone.View.extend({
 
   events: {
     'input #headline': 'onHeadline',
+    'input #date-time': 'onDateTime',
+    'input #website-url': 'onWebsiteUrl',
     'input #credit': 'onCredit',
     'input #image-scale': 'onScale',
     'change #aspect-ratio': 'onAspectRatio',
@@ -174,6 +179,13 @@ MEME.MemeEditorView = Backbone.View.extend({
   onHeadline: function() {
     this.model.set('headlineText', this.$('#headline').val());
   },
+  onDateTime: function() {
+    this.model.set('dateTimeText', this.$('#date-time').val());
+  },
+  onWebsiteUrl: function() {
+    this.model.set('websiteUrlText', this.$('#website-url').val());
+  },
+  
   onAspectRatio: function() {
     this.model.set("aspectRatio", this.$("#aspect-ratio").val())
   },

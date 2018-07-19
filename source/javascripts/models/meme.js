@@ -6,13 +6,13 @@ MEME.MemeModel = Backbone.Model.extend({
   defaults: {
     aspectRatio: 'twitter',
     aspectRatioOpts: [
-      {text: 'Twitter (1024 x 512px)', value: 'twitter'},
-      {text: 'Instagram (1080 x 1080px)', value: 'instagram'},
-      {text: 'Facebook (1200 x 630px)', value: 'facebook'},
-      {text: 'Pinterest (736 x 1128px)', value: 'pinterest'}
+      {text: 'US Letter (8.5x11")', value: 'us-letter'},
+      {text: 'US Flyer (11x17")', value: 'us-tabloid'},
+      {text: 'A4 (210 x 297mm)', value: 'a4'},
+      {text: 'A3 (297 x 420mm)', value: 'a3'}
     ],
-    backgroundColor: '',
-    backgroundColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'],
+    /* backgroundColor: '',
+    backgroundColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'], */
     backgroundPosition: { x: null, y: null },
     creditText: 'Source:',
     creditSize: 12,
@@ -23,7 +23,9 @@ MEME.MemeModel = Backbone.Model.extend({
     fontFamilyOpts: ['Klima', 'Graph FF Condensed', 'Katwijk Mono'],
     fontSize: 26,
     headlineText: 'Write your own headline',
-    height: 378,
+    dateTimeText: 'Monday, January 1 2020 – 8pm',
+    websiteUrlText: 'myeventurl.org',
+    height: 1060,
     imageScale: 1,
     imageSrc: '',
     overlayAlpha: 0.5,
@@ -36,13 +38,13 @@ MEME.MemeModel = Backbone.Model.extend({
       {text: 'Center-aligned', value: 'center'},
       {text: 'Right-aligned', value: 'right'}
     ],
-    textShadow: false,
-    textShadowEdit: true,
+    /*textShadow: false,
+    textShadowEdit: true, */
     watermarkAlpha: 1,
     watermarkMaxWidthRatio: 0.2,
     watermarkSrc: '<%= image_path("350-logo-v3-white.png") %>',
     watermarkOpts: [],
-    width: 755
+    width: 824
   },
 
   // Initialize with custom image members used for background and watermark:
