@@ -19,8 +19,12 @@ MEME.MemeModel = Backbone.Model.extend({
     downloadName: 'share',
     fontColor: 'white',
     fontColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'],
-    fontFamily: 'Klima',
-    fontFamilyOpts: ['Klima', 'Graph FF Condensed', 'Katwijk Mono'],
+    fontFamily: 'klima-web',
+    fontFamilyOpts: [
+      {text:'Klima', value:'klima-web'},
+      {text:'Graph FF Condensed', value:'graph-ff-condensed-web'},
+      {text:'Katwijk Mono', value:'katwijk-mono-web'}
+    ],
     fontSize: 26,
     headlineText: 'Write your own headline',
     dateTimeText: 'Monday, January 1 2020 – 8pm',
