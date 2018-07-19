@@ -3,6 +3,7 @@ MEME.waitForFonts = function(callback) {
   // Parse out fonts list:
   var fonts = this.model.get('fontFamily').split(',');
 
+
   // Concat on additional font options:
   fonts = _.map(this.model.get('fontFamilyOpts') || [], function(opt) {
     return opt.hasOwnProperty('value') ? opt.value : opt;
@@ -10,6 +11,8 @@ MEME.waitForFonts = function(callback) {
 
   // Filter down to unique fonts list:
   fonts = _.unique(fonts);
+
+  // console.log('detected fonts in CSS: ' + fonts);
 
   // Setup loader values:
   var deferred = this.$.Deferred();
@@ -59,7 +62,8 @@ MEME.waitForFonts = function(callback) {
   for (var i=0; i < fonts.length; i++) {
     pendingFonts.push(new PendingFont(fonts[i]));
   }
-  
+
   testFonts();
   return deferred.promise();
+
 };

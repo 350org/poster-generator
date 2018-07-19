@@ -20,10 +20,19 @@ MEME = {
       model: this.model
     });
 
-    // Re-render view after all fonts load:
+    /* Re-render view after all fonts load:
     this.waitForFonts().then(function() {
       MEME.render();
-    });
+    }); */
+
+
+    fontDelay = function(){
+      console.log('delayed re-render.');
+      setTimeout( MEME.render(), 4000);
+    }
+    // Re-render after delay for webfonts
+    setTimeout( fontDelay, 4000);
+    setTimeout( fontDelay, 10000);
   }
 };
 
