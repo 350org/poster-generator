@@ -1,0 +1,68 @@
+var generatorConfig = {
+
+  formatField: {
+    name: 'format',
+    label: 'Paper Size',
+    inputType: 'select',
+    inputOptions: {
+      {text: 'US Letter (8.5x11")', value: 'us-letter', height: '1060', width: '824'},
+      {text: 'US Flyer (11x17")', value: 'us-tabloid', height: '1620', width: '1060'},
+      {text: 'A4 (210 x 297mm)', value: 'a4', height: '820', width: '1100'},
+      {text: 'A3 (297 x 420mm)', value: 'a3', height: '1100', width: '1580'}
+    },
+    inputDefaultValue: 'us-letter',
+  },
+  textField: {
+    name: 'headline',
+    label: 'Custom Text',
+    inputType: 'text',
+    inputDefaultValue: 'Add Your Text Here.',
+    textSizeInput: {
+      name: 'headline-text-size',
+      label: 'Text Size',
+      inputType: 'range',
+      inputValueMin: 20,
+      inputDefaultValue: 35,
+      inputValueMax: 50,}
+    },
+    textColor: '#000000', // default text color
+    textColorInput: {
+      name: 'headline-text-color',
+      label: 'Text Color',
+      inputType: 'color',
+      inputOptions: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+      inputDefaultValue: '#000',
+    },
+    textFont: 'sans-serif' // default text font
+    textFont: {
+      name: 'headline-text-font',
+      label: '',
+      inputType: 'hidden',
+      inputDefaultValue: 'klima-web',
+    },
+    output: {
+      positionX: 0,
+      positionY: 0,
+    }
+  },
+  imageField: {
+    name: 'headline-text-color',
+    label: 'Text Color',
+    description: 'Drag your image here, or click the "upload" button to upload an image.',
+    inputType: 'image',
+    inputDefaultValue: 'https://sample.com/default-image-url.jpg'
+    imageOverlay: {
+      imageOverlayColor: '#000000',
+      imageOverlayOpacity: 0.6,
+      imageOverlayColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+    },
+    output: {
+      positionX: 0,
+      positionY: 0,
+    }
+
+  }
+
+
+
+}

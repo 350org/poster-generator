@@ -4,20 +4,59 @@
 */
 MEME.MemeEditorView = Backbone.View.extend({
 
+
+
   initialize: function() {
-    this.buildForms();
+    //this.buildForms();
+    this.buildFormsFromConfig();
     this.listenTo(this.model, 'change', this.render);
     this.render();
-
-    /*
-    $(".tab").click(function() {
-      $("." + $(this).attr("data-pane")).css(
-        "display",
-        "block"
-      ), $(this).css("border-bottom", "2px solid rgba(76, 78, 77, .2)"), $(this).siblings().css("border-bottom", "2px solid rgba(76, 78, 77, .025)"), $("." + $(this).siblings().attr("data-pane")).css("display", "none");
-    });
-    */
   },
+
+  buildFormsFromConfig: function(){
+    var d = this.model.toJSON();
+    var editor = $('.m-editor');
+
+    function buildSelectOptions(opts) {
+      return _.reduce(
+        opts,
+        function(memo, opt) {
+          return (memo += [
+            '<option value="', opt.hasOwnProperty("value") ? opt.value : opt, '">', opt.hasOwnProperty("text") ? opt.text : opt,"</option>"].join(""));
+        },
+        ''
+      );
+    }
+
+    // loop through config file and build the inputs
+    for (var n = 0; n < d.length; n++) {
+      var wrapper = editor.append('<div id="'.d[n][name].'" class="input-'.d[n][type].'"');
+      // Input type: select
+      if ( d[n][type] == 'select' ){
+        var select = wrapper.append('<select id="'.opt.name.'" name="'.opt.name.'">');
+        select.append( buildSelectOptions(opts) );
+      }
+      // Input type: color
+      if ( d[n][type] == 'color' && d[n][inputOptions].length) {
+        var colorPicker = wrapper.append('<ul class="m-editor__color-picker">');
+        var colorOpts = _.reduce(
+          d[n][inputOptions],
+          function(memo, opt) {
+            var color = opt.hasOwnProperty("value") ? opt.value : opt;
+            return (memo +=
+              '<li><label><input class="m-editor__swatch" style="background-color:' +
+              color +
+              '" type="radio" name="'.d[n][name].'" value="' +
+              color +
+              '"></label></li>');
+          },
+          ""
+        )
+        $("#".d[n][name]).show().find("ul").append(colorOpts);
+      }
+    }
+
+  }
 
   // Builds all form options based on model option arrays:
   buildForms: function() {
@@ -185,7 +224,7 @@ MEME.MemeEditorView = Backbone.View.extend({
   onWebsiteUrl: function() {
     this.model.set('websiteUrlText', this.$('#website-url').val());
   },
-  
+
   onAspectRatio: function() {
     this.model.set("aspectRatio", this.$("#aspect-ratio").val())
   },
