@@ -47,11 +47,6 @@ MEME.MemeEditorView = Backbone.View.extend({
       $('#text-align').append(buildOptions(d.textAlignOpts)).show();
     }
 
-    // Build font size options:
-    if (d.fontSizeOpts && d.fontSizeOpts.length) {
-      $('#font-size').append(buildOptions(d.fontSizeOpts)).show();
-    }
-
     // Build font family options:
     if (d.fontFamilyOpts && d.fontFamilyOpts.length) {
       $('#font-family').append(buildOptions(d.fontFamilyOpts)).show();
@@ -125,13 +120,15 @@ MEME.MemeEditorView = Backbone.View.extend({
     // text inputs
     this.$('#headline').val(d.headlineText);
     this.$('#date-time').val(d.dateTimeText);
+    this.$('#location').val(d.locationText);
+    this.$('#location-2').val(d.locationTwoText);
     this.$('#website-url').val(d.websiteUrlText);
 
     this.$('#aspect-ratio').val(d.aspectRatio);
     this.$('#watermark').val(d.watermarkSrc);
     this.$("#watermark-alpha").val(d.watermarkAlpha);
     this.$('#image-scale').val(d.imageScale);
-    this.$('#font-size').val(d.fontSize);
+    this.$('#title-font-size').val(d.fontSize);
     this.$('#font-family').val(d.fontFamily);
     this.$("#font-color").find('[value="' + d.fontColor + '"]').prop("checked", true);
     this.$("#overlay-alpha").val(d.overlayAlpha);
@@ -144,11 +141,13 @@ MEME.MemeEditorView = Backbone.View.extend({
   events: {
     'input #headline': 'onHeadline',
     'input #date-time': 'onDateTime',
+    'input #location': 'onLocation',
+    'input #location-2': 'onLocationTwo',
     'input #website-url': 'onWebsiteUrl',
     'input #credit': 'onCredit',
     'input #image-scale': 'onScale',
     'change #aspect-ratio': 'onAspectRatio',
-    'change #font-size': 'onFontSize',
+    'change #title-font-size': 'onFontSize',
     'change #font-family': 'onFontFamily',
     'change [name="font-color"]': "onFontColor",
     "change #watermark": "onWatermark",
@@ -182,10 +181,16 @@ MEME.MemeEditorView = Backbone.View.extend({
   onDateTime: function() {
     this.model.set('dateTimeText', this.$('#date-time').val());
   },
+  onLocation: function() {
+    this.model.set('locationText', this.$('#location').val());
+  },
+  onLocationTwo: function() {
+    this.model.set('locationTwoText', this.$('#location-2').val());
+  },
   onWebsiteUrl: function() {
     this.model.set('websiteUrlText', this.$('#website-url').val());
   },
-  
+
   onAspectRatio: function() {
     this.model.set("aspectRatio", this.$("#aspect-ratio").val())
   },
@@ -198,7 +203,7 @@ MEME.MemeEditorView = Backbone.View.extend({
   },
 
   onFontSize: function() {
-    this.model.set('fontSize', this.$('#font-size').val());
+    this.model.set('fontSize', this.$('#title-font-size').val());
   },
 
   onFontFamily: function() {

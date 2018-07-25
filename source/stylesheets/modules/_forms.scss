@@ -3,7 +3,7 @@ form {
     font-size:0.75rem;
     font-weight:700;
     letter-spacing:0.06em;
-    margin:0.8em 0 0.4em;
+    margin:1.8em 0 0.4em;
     text-transform:uppercase;
   }
 
@@ -24,9 +24,11 @@ form {
 
   textarea,
   input[type="text"] {
-    border: 1px solid #efefef;
+    border:1px solid #efefef;
+    font-size:1rem;
+    margin-bottom:3px;
     outline: 0;
-    padding: 6px 5px;
+    padding:0.5em 0.7em;
 
     &:focus {
       border: 1px solid lighten($theme-color, 40);

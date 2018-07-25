@@ -28,9 +28,10 @@ MEME = {
 
     fontDelay = function(){
       console.log('delayed re-render.');
-      setTimeout( MEME.render(), 4000);
+      setTimeout( MEME.render(), 100);
     }
     // Re-render after delay for webfonts
+    setTimeout( fontDelay, 2000);
     setTimeout( fontDelay, 4000);
     setTimeout( fontDelay, 10000);
   }

@@ -1,5 +1,8 @@
 /* CSS Document */
-@font-face {
+
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700');
+
+/*@font-face {
   font-family:'klima-web';
 	font-style:normal;
 	font-variant:normal;
@@ -8,18 +11,18 @@
     src:url('https://s3.amazonaws.com/s3.350.org/fonts/klima/klima-bold-web.eot?#iefix') format('embedded-opentype'),
 		url('https://s3.amazonaws.com/s3.350.org/fonts/klima/klima-bold-web.svg#klimaheavy') format('svg'),
 		url('https://s3.amazonaws.com/s3.350.org/fonts/klima/klima-bold-web.woff2') format('woff2'),
-		url('https://s3.amazonaws.com/s3.350.org/fonts/klima/klima-bold-web.ttf') format('truetype');}
+		url('https://s3.amazonaws.com/s3.350.org/fonts/klima/klima-bold-web.ttf') format('truetype');}*/
 
 @font-face {
-  font-family:'graph-ff-condensed-web';
+  font-family:'folsom-web';
 	font-style:normal;
 	font-variant:normal;
 	font-weight:700;
-    src:url('https://s3.amazonaws.com/s3.350.org/fonts/graph-ff/graph-ff-condensed-black-web.eot');
-    src:url('https://s3.amazonaws.com/s3.350.org/fonts/graph-ff/graph-ff-condensed-black-web.eot?#iefix') format('embedded-opentype'),
-		url('https://s3.amazonaws.com/s3.350.org/fonts/graph-ff/graph-ff-condensed-black-web.svg#graphffcondensed') format('svg'),
-		url('https://s3.amazonaws.com/s3.350.org/fonts/graph-ff/graph-ff-condensed-black-web.woff2') format('woff2'),
-		url('https://s3.amazonaws.com/s3.350.org/fonts/graph-ff/graph-ff-condensed-black-web.ttf') format('truetype');}
+    src:url('https://s3.amazonaws.com/s3.350.org/fonts/folsom/web/folsom-black-web.eot');
+    src:url('https://s3.amazonaws.com/s3.350.org/fonts/folsom/web/folsom-black-web.eot?#iefix') format('embedded-opentype'),
+		url('https://s3.amazonaws.com/s3.350.org/fonts/folsom/web/folsom-black-web.svg#graphffcondensed') format('svg'),
+		url('https://s3.amazonaws.com/s3.350.org/fonts/folsom/web/folsom-black-web.woff2') format('woff2'),
+		url('https://s3.amazonaws.com/s3.350.org/fonts/folsom/web/folsom-black-web.ttf') format('truetype');}
 
 @font-face {
   font-family:'katwijk-mono-web';

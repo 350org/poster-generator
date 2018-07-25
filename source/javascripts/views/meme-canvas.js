@@ -96,12 +96,14 @@ MEME.MemeCanvasView = Backbone.View.extend({
       }
     }
 
+    var headlineTextBoxHeight = d.fontSize;
+
     function renderHeadlineText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
       var y = (1.5 * padding);
 
-      ctx.font = d.fontSize +'pt '+ d.fontFamily;
+      ctx.font = d.fontSize +'pt '+ 'folsom-web';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
@@ -120,21 +122,24 @@ MEME.MemeCanvasView = Backbone.View.extend({
 
       var words = d.headlineText.split(' ');
       var line  = '';
+      var numberOfLines = 1;
 
       for (var n = 0; n < words.length; n++) {
         var testLine  = line + words[n] + ' ';
         var metrics   = ctx.measureText( testLine );
         var testWidth = metrics.width;
-
-        if (testWidth > maxWidth && n > 0) {
+        if ( (testWidth > maxWidth && n > 0) ) {
           ctx.fillText(line, x, y);
           line = words[n] + ' ';
-          y += Math.round(d.fontSize * 1.9);
+          y += Math.round(d.fontSize * 1.25);
+          numberOfLines++;
         } else {
           line = testLine;
         }
+        // crude calculation for the height of a multiline text headlineTextBoxHeight
+        // replace with metrics.actualBoundingBoxAscent once browser support is good enough
+        headlineTextBoxHeight = Math.round(d.fontSize * 1.4 * numberOfLines);
       }
-
       ctx.fillText(line, x, y);
       ctx.shadowColor = 'transparent';
     }
@@ -142,9 +147,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
     function renderDateTimeText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding) + ( 1 * (d.height / 3) );
+      var y = (1.5 * padding) + headlineTextBoxHeight + 35;
+      //var y = (1.5 * padding) + ( 1 * (d.height / 3) );
 
-      ctx.font = d.fontSize +'pt '+ d.fontFamily;
+      ctx.font = 'bold 21pt "IBM Plex Sans"';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
@@ -159,33 +165,81 @@ MEME.MemeCanvasView = Backbone.View.extend({
         ctx.textAlign = 'left';
       }
 
-      var words = d.dateTimeText.split(' ');
+      ctx.fillText(d.dateTimeText, x, y);
+      ctx.shadowColor = 'transparent';
+    }
+
+    function renderLocationText(ctx) {
+      var maxWidth = Math.round(d.width * 0.75);
+      var x = padding;
+      var y = (1.5 * padding) + headlineTextBoxHeight + 80;
+
+      ctx.font = '21pt '+ 'IBM Plex Sans';
+      ctx.fillStyle = d.fontColor;
+      ctx.textBaseline = 'top';
+
+      // Text alignment:
+      if (d.textAlign == 'center') {
+        ctx.textAlign = 'center';
+        x = d.width / 2;
+      } else if (d.textAlign == 'right' ) {
+        ctx.textAlign = 'right';
+        x = d.width - padding;
+      } else {
+        ctx.textAlign = 'left';
+      }
+
+      ctx.fillText(d.locationText, x, y);
+      ctx.shadowColor = 'transparent';
+    }
+
+    function renderLocationTwoText(ctx) {
+      var maxWidth = Math.round(d.width * 0.75);
+      var x = padding;
+      var y = (1.5 * padding) + headlineTextBoxHeight + 125;
+
+      ctx.font = '21pt "IBM Plex Sans"';
+      ctx.fillStyle = d.fontColor;
+      ctx.textBaseline = 'top';
+
+      // Text alignment:
+      if (d.textAlign == 'center') {
+        ctx.textAlign = 'center';
+        x = d.width / 2;
+      } else if (d.textAlign == 'right' ) {
+        ctx.textAlign = 'right';
+        x = d.width - padding;
+      } else {
+        ctx.textAlign = 'left';
+      }
+
+      var words = d.locationTwoText.split(' ');
       var line  = '';
+      var numberOfLines = 1;
 
       for (var n = 0; n < words.length; n++) {
         var testLine  = line + words[n] + ' ';
         var metrics   = ctx.measureText( testLine );
         var testWidth = metrics.width;
-
-        if (testWidth > maxWidth && n > 0) {
+        if ( (testWidth > maxWidth && n > 0) ) {
           ctx.fillText(line, x, y);
           line = words[n] + ' ';
-          y += Math.round(d.fontSize * 1.9);
+          y += Math.round(21 * 2.15);
+          numberOfLines++;
         } else {
           line = testLine;
         }
       }
-
       ctx.fillText(line, x, y);
-      ctx.shadowColor = 'transparent';
     }
+
 
     function renderWebsiteUrlText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding) + ( 2 * (d.height / 3) );
+      var y = d.height - (1.5 * padding);
 
-      ctx.font = d.fontSize +'pt '+ d.fontFamily;
+      ctx.font =  '18pt '+ 'katwijk-mono-web';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'baseline';
 
@@ -256,6 +310,8 @@ MEME.MemeCanvasView = Backbone.View.extend({
     renderBackgroundColor(ctx);
     renderHeadlineText(ctx);
     renderDateTimeText(ctx);
+    renderLocationText(ctx);
+    renderLocationTwoText(ctx);
     renderWebsiteUrlText(ctx);
     renderCredit(ctx);
     renderWatermark(ctx);

@@ -66,22 +66,32 @@
   <div id="editor-options-text" class="content-pane editor-options-section">
     <h2 class="editor-section-header">Text</h2>
 
-    <h3 style="display:none;"><label for="headline">Headline</label></h3>
-    <textarea id="headline" name="headline" type="text" value=""></textarea>
+    <h3><label for="headline">Title</label></h3>
+    <input id="headline" name="headline" type="text" value="" style="font-size:1.3rem;">
+    <h3><label for="font-size">Title Text Size</label></h3>
+    <input id="title-font-size" type="range" max="120" min="18" step=".33" value="60">
 
+    <h3>Event Info</h3>
     <h3 style="display:none;"><label for="date-time">Date/Time</label></h3>
-    <textarea id="date-time" name="date-time" type="text" value=""></textarea>
+    <input id="date-time" name="date-time" type="text" value="">
 
-    <h3 style="display:none;"><label for="date-time">Website URL</label></h3>
-    <textarea id="website-url" name="website-url" type="text" value=""></textarea>
+    <h3 style="display:none;"><label for="location">Location</label></h3>
+    <input id="location" name="location" type="text" value="">
 
-    <h3><label for="font-size">Text Size</label></h3>
-    <input id="font-size" type="range" max="64" min="18" step=".33" value="24">
+    <h3 style="display:none;"><label for="location">Location, line 2</label></h3>
+    <input id="location-2" name="location-2" type="text" value="">
 
+
+    <h3><label for="date-time">Website URL</label></h3>
+    <input id="website-url" name="website-url" type="text" value="">
+
+
+    <!--
     <h3><label for="font-family">Font</label></h3>
     <select class="font-family" id="font-family">
       <option value="" disabled>Select a font</option>
     </select>
+    -->
 
     <h3><label for="text-alignment">Text Alignment</label></h3>
     <select class="text-align" id="text-align">
@@ -89,12 +99,14 @@
     </select>
 
 
+    <!--
     <div class="m-editor__fontcolor" id="font-color">
       <h3>Font Color</h3>
       <ul class="checkbox-group">
         <li><label><input type="radio" name="font-color" value="#000"> Default</label></li>
       </ul>
     </div>
+    -->
 
 
     <!--
