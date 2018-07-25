@@ -1,5 +1,5 @@
 // colors
-$default-text-color     : #4C4E4D;
+$default-text-color     : #17292e;
 $theme-color            : #2980b9;
 
 // breakpoints
@@ -23,7 +23,7 @@ $sidebar-width-narrow   : 160px;
 $default-font-size    : 16px;
 $default-line-height  : (25px/$default-font-size);
 
-$text-font-secondary: Menlo, Monaco, Consolas, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
+$text-font-secondary: katwijk-mono-web,Menlo, Monaco, Consolas, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
 
 @function wva-pair($multiplier) {
   $ratio: 2.2;

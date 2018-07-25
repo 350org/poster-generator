@@ -11,6 +11,14 @@ $m: '.m-editor';
     margin-bottom:0;
     overflow:scroll;
   }
+  .m-supertitle{
+    font-size:1rem;
+    font-family:$text-font-secondary;}
+  #m-title{
+    font-family:folsom-web,-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:2.3rem;
+    line-height:1;
+    margin-bottom:1em;}
 
   .editor-slider{
     display:flex;
@@ -22,18 +30,18 @@ $m: '.m-editor';
     margin:0;}
   .editor-slider-fontsize::before{
     content:'Aa';
-    font:0.7em 'katwijk-mono-web',Menlo,Monaco,monospace;
+    font:0.7em $text-font-secondary;
     margin-right:0.7rem;}
   .editor-slider-fontsize::after{
     content:'Aa';
-    font:1.1em 'katwijk-mono-web',Menlo,Monaco,monospace;
+    font:1.1em $text-font-secondary;
     margin-left:0.7rem;}
 
   select{
     font-size:1rem;}
 
   .editor-options-section{
-    margin-bottom:2rem;}
+    margin-bottom:0rem;}
 
   .dropzone {
     background-color: #fcfcfc;

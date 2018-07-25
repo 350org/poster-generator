@@ -1,5 +1,6 @@
 <form class="m-editor" id="meme-editor-view">
-  <h1 id="m-title"><%= current_page.data.title %></h1>
+  <h1 class="m-supertitle meta">#RiseForClimate</h1>
+  <h1 id="m-title"><span class="bg-teal text-highlight"><%= current_page.data.title %></span></h1>
 
   <div id="editor-options-image" class="content-pane editor-options-section">
     <h3>Paper Size</h3>
@@ -68,7 +69,9 @@
   </div>
 
   <div id="editor-options-text" class="content-pane editor-options-section">
-    <h2 class="editor-section-header">Text</h2>
+    <!--
+      <h2 class="editor-section-header">Text</h2>
+    -->
 
     <h3><label for="headline">Title</label></h3>
     <input id="headline" name="headline" type="text" value="" style="font-size:1.3rem;">
