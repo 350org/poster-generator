@@ -38,19 +38,30 @@ MEME.MemeCanvasView = Backbone.View.extend({
     var d = this.model.toJSON();
     var ctx = this.canvas.getContext('2d');
     var padding = Math.round(d.width * d.paddingRatio);
+    var watermarkWidth = m.watermark.width;
 
     switch (d.aspectRatio) {
       case "us-letter":
         d.width = 824, d.height = 1060;
+        padding = Math.round(d.width * d.paddingRatio);
         break;
       case "us-tabloid":
         d.width = 1060, d.height = 1620;
+        padding = Math.round(d.width * d.paddingRatio);
+        d.fontSize = 150;
+        d.eventInfoFontSize = 32;
+        d.eventDescriptionFontSize = 22;
         break;
       case "a4":
         d.width = 820, d.height = 1100;
+        padding = Math.round(d.width * d.paddingRatio);
         break;
       case "a3":
         d.width = 1100, d.height = 1580;
+        padding = Math.round(d.width * d.paddingRatio);
+        d.fontSize = 150;
+        d.eventInfoFontSize = 32;
+        d.eventDescriptionFontSize = 22;
     }
 
     // Reset canvas display:
@@ -63,6 +74,7 @@ MEME.MemeCanvasView = Backbone.View.extend({
       var bh = m.background.height;
       var bw = m.background.width;
 
+      /* user-scalable image
       if (bh && bw) {
         // Transformed height and width:
         // Set the base position if null
@@ -72,6 +84,20 @@ MEME.MemeCanvasView = Backbone.View.extend({
         var cy = d.backgroundPosition.y || d.height / 2;
 
         ctx.drawImage(m.background, 0, 0, bw, bh, cx-(tw/2), cy-(th/2), tw, th);
+      }
+      */
+      // Constrain transformed height based on maximum allowed width:
+      if (bh && bw) {
+        // Calculate watermark maximum width:
+        var mw = d.width - d.width*d.paddingRatio;
+
+        // Constrain transformed height based on maximum allowed width:
+        if (mw < bw) {
+          th = bh * (mw / bw);
+          tw = mw;
+        }
+        ctx.globalAlpha = d.imageOpacity;
+        ctx.drawImage(m.background, 0, 0, bw, bh, (d.width-tw)/2, (d.height-th)/2-40, tw, th);
       }
     }
 
@@ -101,7 +127,7 @@ MEME.MemeCanvasView = Backbone.View.extend({
     function renderHeadlineText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding);
+      var y = (1.5 * padding) + d.fontSize/2;
 
       ctx.font = d.fontSize +'pt '+ 'folsom-web';
       ctx.fillStyle = d.fontColor;
@@ -131,7 +157,7 @@ MEME.MemeCanvasView = Backbone.View.extend({
         if ( (testWidth > maxWidth && n > 0) ) {
           ctx.fillText(line, x, y);
           line = words[n] + ' ';
-          y += Math.round(d.fontSize * 1.25);
+          y += Math.round(d.fontSize * 1.2);
           numberOfLines++;
         } else {
           line = testLine;
@@ -147,10 +173,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
     function renderDateTimeText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding) + headlineTextBoxHeight + 35;
+      var y = padding + headlineTextBoxHeight + d.fontSize/10 + 80;
       //var y = (1.5 * padding) + ( 1 * (d.height / 3) );
 
-      ctx.font = 'bold 21pt "IBM Plex Sans"';
+      ctx.font = 'bold ' + d.eventInfoFontSize + 'pt "IBM Plex Sans"';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
@@ -172,9 +198,9 @@ MEME.MemeCanvasView = Backbone.View.extend({
     function renderLocationText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding) + headlineTextBoxHeight + 80;
+      var y = padding + headlineTextBoxHeight + d.fontSize/10 + 80 + d.eventInfoFontSize*2;
 
-      ctx.font = '21pt '+ 'IBM Plex Sans';
+      ctx.font =  d.eventInfoFontSize + 'pt "IBM Plex Sans"';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
@@ -196,9 +222,9 @@ MEME.MemeCanvasView = Backbone.View.extend({
     function renderLocationTwoText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
       var x = padding;
-      var y = (1.5 * padding) + headlineTextBoxHeight + 125;
+      var y = padding + headlineTextBoxHeight + d.fontSize/10 + 80 + d.eventInfoFontSize*4 + 30;
 
-      ctx.font = '21pt "IBM Plex Sans"';
+      ctx.font = d.eventDescriptionFontSize +'pt "IBM Plex Sans"';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'top';
 
@@ -224,7 +250,7 @@ MEME.MemeCanvasView = Backbone.View.extend({
         if ( (testWidth > maxWidth && n > 0) ) {
           ctx.fillText(line, x, y);
           line = words[n] + ' ';
-          y += Math.round(21 * 2.15);
+          y += Math.round(d.eventDescriptionFontSize * 2.15);
           numberOfLines++;
         } else {
           line = testLine;
@@ -236,10 +262,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
 
     function renderWebsiteUrlText(ctx) {
       var maxWidth = Math.round(d.width * 0.75);
-      var x = padding;
-      var y = d.height - (1.5 * padding);
+      var x = padding + watermarkWidth + 40;
+      var y = d.height - padding - 5;
 
-      ctx.font =  '18pt '+ 'katwijk-mono-web';
+      ctx.font =  '18pt katwijk-mono-web';
       ctx.fillStyle = d.fontColor;
       ctx.textBaseline = 'baseline';
 
@@ -283,11 +309,12 @@ MEME.MemeCanvasView = Backbone.View.extend({
       ctx.fillText(d.creditText, padding, d.height - padding);
     }
 
+
     function renderWatermark(ctx) {
       // Base & transformed height and width:
       var bw, bh, tw, th;
       bh = th = m.watermark.height;
-      bw = tw = m.watermark.width;
+      watermarkWidth = bw = tw = m.watermark.width;
 
       if (bh && bw) {
         // Calculate watermark maximum width:
@@ -296,11 +323,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
         // Constrain transformed height based on maximum allowed width:
         if (mw < bw) {
           th = bh * (mw / bw);
-          tw = mw;
+          watermarkWidth = tw = mw;
         }
-
         ctx.globalAlpha = d.watermarkAlpha;
-        ctx.drawImage(m.watermark, 0, 0, bw, bh, d.width-padding-tw, d.height-padding-th, tw, th);
+        ctx.drawImage(m.watermark, 0, 0, bw, bh, padding-22, d.height-padding/2-th+10, tw, th);
         ctx.globalAlpha = 1;
       }
     }
@@ -308,13 +334,16 @@ MEME.MemeCanvasView = Backbone.View.extend({
     renderBackground(ctx);
     renderOverlay(ctx);
     renderBackgroundColor(ctx);
+    renderWatermark(ctx);
+
     renderHeadlineText(ctx);
     renderDateTimeText(ctx);
     renderLocationText(ctx);
     renderLocationTwoText(ctx);
     renderWebsiteUrlText(ctx);
-    renderCredit(ctx);
-    renderWatermark(ctx);
+
+    //renderCredit(ctx);
+
 
     var data = this.canvas.toDataURL(); //.replace('image/png', 'image/octet-stream');
     this.$('#meme-download').attr({

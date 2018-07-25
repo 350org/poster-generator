@@ -32,6 +32,7 @@ MEME.MemeModel = Backbone.Model.extend({
     height: 1060,
     imageScale: 1,
     imageSrc: '',
+    imageOpts: '',
     overlayAlpha: 0.5,
     overlayColor: '#17292e',
     overlayColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'],
@@ -46,7 +47,7 @@ MEME.MemeModel = Backbone.Model.extend({
     textShadowEdit: true, */
     watermarkAlpha: 1,
     watermarkMaxWidthRatio: 0.2,
-    watermarkSrc: '<%= image_path("350-logo-v3-white.png") %>',
+    watermarkSrc: '',
     watermarkOpts: [],
     width: 824
   },
@@ -69,6 +70,7 @@ MEME.MemeModel = Backbone.Model.extend({
     // Update image and watermark sources if new source URLs are set:
     this.listenTo(this, 'change:imageSrc', function() {
       this.background.src = this.get('imageSrc');
+      this.setImageSrc(this.get('imageSrc'));
     });
     this.listenTo(this, 'change:watermarkSrc', function() {
       this.setWatermarkSrc(this.get('watermarkSrc'));
@@ -114,5 +116,21 @@ MEME.MemeModel = Backbone.Model.extend({
 
     this.watermark.src = data;
     this.set('watermarkSrc', src);
+  },
+
+  setImageSrc: function(src) {
+    var opt = _.findWhere(this.get('imageOpts'), {value: src});
+    var data = (opt && opt.data) || src;
+
+    // Toggle cross-origin attribute for Data URI requests:
+    if (data.indexOf('data:') === 0) {
+      this.watermark.removeAttribute('crossorigin');
+    } else {
+      this.watermark.setAttribute('crossorigin', 'anonymous');
+    }
+
+    this.background.src = data;
+    this.set('imageSrc', src);
   }
+
 });

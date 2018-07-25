@@ -12,6 +12,23 @@ $m: '.m-editor';
     overflow:scroll;
   }
 
+  .editor-slider{
+    display:flex;
+    align-items:center;
+    margin:0.5em 0 1em;}
+  .editor-slider-fontsize label{
+    display:none;}
+  .editor-slider-fontsize input{
+    margin:0;}
+  .editor-slider-fontsize::before{
+    content:'Aa';
+    font:0.7em 'katwijk-mono-web',Menlo,Monaco,monospace;
+    margin-right:0.7rem;}
+  .editor-slider-fontsize::after{
+    content:'Aa';
+    font:1.1em 'katwijk-mono-web',Menlo,Monaco,monospace;
+    margin-left:0.7rem;}
+
   select{
     font-size:1rem;}
 

@@ -12,11 +12,14 @@ $m: '.m-canvas';
 
   #{$m}__canvas {
     background: #fcfcfc;
+    display:inline-block;
 
     canvas {
+      background:#fff;
       border:1px solid rgba(0,0,0,0.1);
       max-height:calc(100vh - 120px);
       max-width: 100% !important;
+      padding:6%;
     }
   }
 

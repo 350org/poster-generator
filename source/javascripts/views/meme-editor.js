@@ -71,6 +71,10 @@ MEME.MemeEditorView = Backbone.View.extend({
       $("#font-color").show().find("ul").append(fontOpts);
     }
 
+    // Build bg image options:
+    if (d.imageOpts && d.imageOpts.length) {
+      $('#image').append(buildOptions(d.imageOpts)).show();
+    }
     // Build watermark options:
     if (d.watermarkOpts && d.watermarkOpts.length) {
       $('#watermark').append(buildOptions(d.watermarkOpts)).show();
@@ -127,7 +131,9 @@ MEME.MemeEditorView = Backbone.View.extend({
     this.$('#aspect-ratio').val(d.aspectRatio);
     this.$('#watermark').val(d.watermarkSrc);
     this.$("#watermark-alpha").val(d.watermarkAlpha);
-    this.$('#image-scale').val(d.imageScale);
+    // this.$('#image-scale').val(d.imageScale);
+    this.$('#image').val(d.imageSrc);
+
     this.$('#title-font-size').val(d.fontSize);
     this.$('#font-family').val(d.fontFamily);
     this.$("#font-color").find('[value="' + d.fontColor + '"]').prop("checked", true);
@@ -146,6 +152,9 @@ MEME.MemeEditorView = Backbone.View.extend({
     'input #website-url': 'onWebsiteUrl',
     'input #credit': 'onCredit',
     'input #image-scale': 'onScale',
+
+    'change #image': 'onImage',
+
     'change #aspect-ratio': 'onAspectRatio',
     'change #title-font-size': 'onFontSize',
     'change #font-family': 'onFontFamily',
@@ -213,7 +222,10 @@ MEME.MemeEditorView = Backbone.View.extend({
   onFontColor: function(evt) {
     this.model.set("fontColor", this.$(evt.target).val());
   },
-
+  onImage: function() {
+    this.model.set('imageSrc', this.$('#image').val());
+    if (localStorage) localStorage.setItem('meme_image', this.$('#image').val());
+  },
   onWatermark: function() {
     this.model.set('watermarkSrc', this.$('#watermark').val());
     if (localStorage) localStorage.setItem('meme_watermark', this.$('#watermark').val());

@@ -1,9 +1,9 @@
 var MEME_SETTINGS = {
   creditText: '', // Default "credits" text.
   creditSize: 12, // Font size for credit text.
-  downloadName: 'share', // The name of the downloaded image file (will have a ".png" extension added).
-  fontColor: '#17292e', // Universal font color.
-  fontColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
+  downloadName: 'rise-download', // The name of the downloaded image file (will have a ".png" extension added).
+  fontColor: '#000000', // Universal font color.
+  fontColorOpts: ['#000000', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
 
   // Universal font family for texts:
   // Note that you'll need to included quoted font names as you would in CSS, ie: '"Knockout 28 B"'.
@@ -17,7 +17,9 @@ var MEME_SETTINGS = {
   ],
 
   // Font size of main headline:
-  fontSize: 80,
+  fontSize: 100,
+  eventInfoFontSize: 22,
+  eventDescriptionFontSize: 16,
   // Font size options: set to empty array to disable font-size selector.
   fontSizeOpts: [
     {text: 'Small text', value: 14},
@@ -25,11 +27,11 @@ var MEME_SETTINGS = {
     {text: 'Large text', value: 36}
   ],
 
-  headlineText: 'Write your own headline', // Default headline text.
+  headlineText: 'My Event Name', // Default headline text.
   dateTimeText: 'Monday, January 1st 2020 – 2pm',
-  locationText: 'My Event Location',
+  locationText: 'Location of my event, Address, City',
   locationTwoText: 'Enter by the side entrance off of Main Street. Doors open at 6pm',
-  websiteUrlText: 'myeventurl.org',
+  websiteUrlText: 'riseforclimate.org',
   imageScale: 1, // Background image scale.
   imageSrc: '', // Default background image path. MUST reside on host domain, or use base64 data.
   overlayAlpha: 0.65, // Opacity of image overlay.
@@ -38,10 +40,23 @@ var MEME_SETTINGS = {
   overlayColor: '',
   // Overlay color options: set to empty array to disable overlay options selector.
   overlayColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
-  paddingRatio: 0.12, // Percentage of canvas width to use as edge padding.
+  paddingRatio: 0.08, // Percentage of canvas width to use as edge padding.
 
+  imageScale: 1,
+  imageOpacity: 0.6,
+  imageSrc: '<%= image_path("rise-bg-icon-diagonal.png") %>', // default bg image url
+  imageOpts: [
+    {text: 'Diagonal Line', value:'<%= image_path("rise-bg-icon-diagonal.png") %>'},
+    {text: 'Sun', value:'<%= image_path("rise-bg-icon-sun.png") %>'},
+    {text: 'Circle', value:'<%= image_path("rise-bg-icon-circle.png") %>'},
+    {text: 'Solidarity Fist', value:'<%= image_path("rise-bg-icon-fist.png") %>'},
+    {text: 'People Together', value:'<%= image_path("rise-bg-icon-peopletogether.png") %>'},
+    {text: 'Solar Power', value:'<%= image_path("rise-bg-icon-solarpower.png") %>'},
+    {text: 'Wind Power', value:'<%= image_path("rise-bg-icon-windpower.png") %>'},
+    {text: '(none)', value:'<%= image_path("blank.png ") %>'}
+  ],
   // Background color, or blank ('') for no overlay. Takes precedent over overlay.
-  backgroundColor: '#ffffff',
+  backgroundColor: '',
   // Background color options: set to empty array to disable overlay options selector.
   backgroundColorOpts: ['#17292e', '#ffffff', '#0f81e8', '#40d7d4', '#FFAB03'],
 
@@ -58,19 +73,16 @@ var MEME_SETTINGS = {
   textShadow: false, // Text shadow toggle.
   textShadowEdit: true, // Toggles text shadow control within the editor.
   watermarkAlpha: 1, // Opacity of watermark image.
-  watermarkMaxWidthRatio: 0.115, // Maximum allowed width of watermark (percentage of total canvas width).
+  watermarkMaxWidthRatio: .22 , // Maximum allowed width of watermark (percentage of total canvas width).
 
   // Path to the watermark image source, or blank for no watermark:
-  // Alternatively, use '<%= asset_data_uri("vox.png") %>' to populate the watermark with base64 data, avoiding Cross-Origin issues.
-  watermarkSrc: (localStorage && localStorage.getItem('meme_watermark')) || '<%= image_path("350-logo-v3-white.png") %>',
+  // Alternatively, use '<%= %>' and asset_data_uri("image.png") to populate the watermark with base64 data, avoiding Cross-Origin issues.
+  watermarkSrc: (localStorage && localStorage.getItem('meme_watermark')) || '<%= image_path("rise-id-en-sun.png") %>',
 
   // Watermark image options: set to empty array to disable watermark picker.
   // NOTE: only populate the "data" attributes with base64 data when concerned about Cross-Origin requests...
   // Otherwise, just leave "data" attributes blank and allow images to load from your server.
-  watermarkOpts: [
-    {text: '350 (white on transparent)', value: '<%= image_path("350-logo-v3-white.png") %>', data: '<%= asset_data_uri("350-logo-v3-white.png") %>'},
-    {text: '350 (white on blue)', value: '<%= image_path("350-logo-v3.png") %>', data: '<%= asset_data_uri("350-logo-v3.png") %>'}
-  ],
+  watermarkOpts: [],
 
   width: 755, // Canvas rendering width.
   // width: 755 // Canvas rendering width.

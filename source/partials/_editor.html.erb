@@ -2,16 +2,20 @@
   <h1 id="m-title"><%= current_page.data.title %></h1>
 
   <div id="editor-options-image" class="content-pane editor-options-section">
-    <h2 class="editor-section-header">Document</h2>
-
     <h3>Paper Size</h3>
     <select class="aspect-ratio" id="aspect-ratio">
       <option value="" disabled>Paper Size</option>
     </select>
 
-    <!-- <h3>Image File</h3>
+    <h3><label for="image">Background Image</label></h3>
+    <select class="image" id="image">
+      <option value="" disabled>Select a watermark</option>
+    </select>
+
+    <!--<h3>Image File</h3>
     <div class="dropzone" id="dropzone">Drop Image Here</div>
     <input type="file" id="loadinput"></input>
+
 
     <div class="image-attribution">
       <h3><label for="credit">Image Credit:</label></h3>
@@ -68,8 +72,10 @@
 
     <h3><label for="headline">Title</label></h3>
     <input id="headline" name="headline" type="text" value="" style="font-size:1.3rem;">
-    <h3><label for="font-size">Title Text Size</label></h3>
-    <input id="title-font-size" type="range" max="120" min="18" step=".33" value="60">
+    <div class="editor-slider editor-slider-fontsize">
+      <label for="font-size">Title Text Size</label>
+      <input id="title-font-size" type="range" max="190" min="18" step="1" value="80">
+    </div>
 
     <h3>Event Info</h3>
     <h3 style="display:none;"><label for="date-time">Date/Time</label></h3>
