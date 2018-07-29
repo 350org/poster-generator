@@ -118,7 +118,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
         ctx.textAlign = 'left';
       }
 
-      var words = d.headlineText.split(' ');
+      var words = false;
+      if (d.headlineText){
+        words = d.headlineText.split(' ');
+      }
       var line  = '';
 
       for (var n = 0; n < words.length; n++) {
@@ -159,7 +162,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
         ctx.textAlign = 'left';
       }
 
-      var words = d.dateTimeText.split(' ');
+      var words = false;
+      if (d.dateTimeText){
+        words = d.dateTimeText.split(' ');
+      }
       var line  = '';
 
       for (var n = 0; n < words.length; n++) {
@@ -200,7 +206,10 @@ MEME.MemeCanvasView = Backbone.View.extend({
         ctx.textAlign = 'left';
       }
 
-      var words = d.websiteUrlText.split(' ');
+      var words = false;
+      if (d.websiteUrlText){
+        words = d.websiteUrlText.split(' ');
+      }
       var line  = '';
 
       for (var n = 0; n < words.length; n++) {

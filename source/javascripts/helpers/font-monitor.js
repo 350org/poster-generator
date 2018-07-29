@@ -1,7 +1,10 @@
 MEME.waitForFonts = function(callback) {
 
   // Parse out fonts list:
-  var fonts = this.model.get('fontFamily').split(',');
+  var fonts = false;
+  if (this.model.get('fontFamily')){
+    fonts = this.model.get('fontFamily').split(',');
+  }
 
 
   // Concat on additional font options:

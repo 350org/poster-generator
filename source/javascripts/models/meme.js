@@ -4,51 +4,18 @@
 */
 MEME.MemeModel = Backbone.Model.extend({
   defaults: {
-    aspectRatio: 'twitter',
-    aspectRatioOpts: [
-      {text: 'US Letter (8.5x11")', value: 'us-letter'},
-      {text: 'US Flyer (11x17")', value: 'us-tabloid'},
-      {text: 'A4 (210 x 297mm)', value: 'a4'},
-      {text: 'A3 (297 x 420mm)', value: 'a3'}
-    ],
-    /* backgroundColor: '',
-    backgroundColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'], */
-    backgroundPosition: { x: null, y: null },
-    creditText: 'Source:',
-    creditSize: 12,
-    downloadName: 'share',
-    fontColor: 'white',
-    fontColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'],
-    fontFamily: 'klima-web',
-    fontFamilyOpts: [
-      {text:'Klima', value:'klima-web'},
-      {text:'Graph FF Condensed', value:'graph-ff-condensed-web'},
-      {text:'Katwijk Mono', value:'katwijk-mono-web'}
-    ],
-    fontSize: 26,
-    headlineText: 'Write your own headline',
-    dateTimeText: 'Monday, January 1 2020 – 8pm',
-    websiteUrlText: 'myeventurl.org',
-    height: 1060,
-    imageScale: 1,
-    imageSrc: '',
-    overlayAlpha: 0.5,
-    overlayColor: '#17292e',
-    overlayColorOpts: ['#ffffff', '#17292e', '#0f81e8', '#40d7d4', '#FFAB03'],
-    paddingRatio: 0.07,
-    textAlign: 'left',
-    textAlignOpts: [
-      {text: 'Left-aligned', value: 'left'},
-      {text: 'Center-aligned', value: 'center'},
-      {text: 'Right-aligned', value: 'right'}
-    ],
-    /*textShadow: false,
-    textShadowEdit: true, */
-    watermarkAlpha: 1,
-    watermarkMaxWidthRatio: 0.2,
-    watermarkSrc: '<%= image_path("350-logo-v3-white.png") %>',
-    watermarkOpts: [],
-    width: 824
+    formatField: {
+      name: 'format',
+      label: 'Size + Format',
+      inputType: 'select',
+      inputOptions: [
+        {text: '500x500px', value: '500square', height: '500', width: '500'},
+        {text: '1280x800px', value: '1280', height: '1280', width: '800'},
+      ],
+      inputDefaultValue: '500square',
+    },
+    height: 500,
+    width:500,
   },
 
   // Initialize with custom image members used for background and watermark:

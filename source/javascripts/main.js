@@ -6,7 +6,9 @@ MEME = {
   },
 
   init: function() {
-    this.model = new this.MemeModel(window.MEME_SETTINGS || {});
+    // this.model = new this.MemeModel(window.MEME_SETTINGS || {});
+    this.model = new this.MemeModel(window.GENERATOR_CONFIG || {});
+
 
     // Create renderer view:
     this.canvas = new this.MemeCanvasView({
@@ -21,7 +23,7 @@ MEME = {
     });
 
     // Re-render view after all fonts load:
-    /* this doesn't seem to work :/ 
+    /* this doesn't seem to work :/
     this.waitForFonts().then(function() {
       MEME.render();
     }); */

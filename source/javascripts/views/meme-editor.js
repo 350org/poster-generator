@@ -5,10 +5,10 @@
 MEME.MemeEditorView = Backbone.View.extend({
 
 
-
   initialize: function() {
     //this.buildForms();
     this.buildFormsFromConfig();
+    this.createEvents();
     this.listenTo(this.model, 'change', this.render);
     this.render();
   },
@@ -27,118 +27,56 @@ MEME.MemeEditorView = Backbone.View.extend({
         ''
       );
     }
-
     // loop through config file and build the inputs
-    for (var n = 0; n < d.length; n++) {
-      var wrapper = editor.append('<div id="'.d[n][name].'" class="input-'.d[n][type].'"');
-      // Input type: select
-      if ( d[n][type] == 'select' ){
-        var select = wrapper.append('<select id="'.opt.name.'" name="'.opt.name.'">');
-        select.append( buildSelectOptions(opts) );
+    for (var field in d) {
+      if ( d.hasOwnProperty(field) ){
+
+        // set up wrapper and label for input
+        if ( d[field].hasOwnProperty('name') && d[field].hasOwnProperty('inputType') ){
+          editor.append('<div id="' + d[field]["name"] + '-wrapper" class="input-' + d[field]["inputType"] +'">');
+          var wrapper = $("#"+ d[field]["name"] + '-wrapper');
+          wrapper.append('<label for="' + d[field]["name"] + '">' + d[field]["label"] + '</label>')
+        }
+
+        // Input type: select dropdown
+        if ( d[field]["inputType"] == 'select' ){
+          var select = wrapper.append('<select id="' + d[field]["name"] + '" name="' + d[field]["name"] + '">');
+          $('#'+ d[field]["name"]).append( buildSelectOptions(d[field]["inputOptions"]) );
+        }
+
+        // Input type: text
+        if ( d[field]["inputType"] == 'text' ){
+          var text = wrapper.append('<input type="text" id="' + d[field]["name"] + '" name="' + d[field]["name"] + '">');
+        }
+        // Input type: image
+        if ( d[field]["inputType"] == 'imageUpload' ){
+          var imageInputHTML = '<div id="' + d[field]["name"] + '-dropzone" class="dropzone">Drop Image Here</div><input type="file" class="loadinput" id="' + d[field]["name"] + '"></input>'
+          wrapper.append(imageInputHTML);
+
+        }
+        // Input type: color
+        if ( d[field]['inputType'] == 'color' && d[field]["inputOptions"].length) {
+          var colorPicker = wrapper.append('<ul class="m-editor__color-picker">');
+          var colorOpts = _.reduce(
+            d[field]["inputOptions"],
+            function(memo, opt) {
+              var color = opt.hasOwnProperty("value") ? opt.value : opt;
+              return (memo +=
+                '<li><label><input class="m-editor__swatch" style="background-color:' +
+                color +
+                '" type="radio" name="' + d[field][name] + '" value="' +
+                color +
+                '"></label></li>');
+            },
+            ""
+          );
+          $("#" + d[field]["name"]).show().find("ul").append(colorOpts);
+        }
       }
-      // Input type: color
-      if ( d[n][type] == 'color' && d[n][inputOptions].length) {
-        var colorPicker = wrapper.append('<ul class="m-editor__color-picker">');
-        var colorOpts = _.reduce(
-          d[n][inputOptions],
-          function(memo, opt) {
-            var color = opt.hasOwnProperty("value") ? opt.value : opt;
-            return (memo +=
-              '<li><label><input class="m-editor__swatch" style="background-color:' +
-              color +
-              '" type="radio" name="'.d[n][name].'" value="' +
-              color +
-              '"></label></li>');
-          },
-          ""
-        )
-        $("#".d[n][name]).show().find("ul").append(colorOpts);
-      }
     }
+  },
 
-  }
-
-  // Builds all form options based on model option arrays:
-  buildForms: function() {
-    var d = this.model.toJSON();
-
-    function buildOptions(opts) {
-      return _.reduce(
-        opts,
-        function(memo, opt) {
-          return (memo += [
-            '<option value="', opt.hasOwnProperty("value") ? opt.value : opt, '">', opt.hasOwnProperty("text") ? opt.text : opt,"</option>"].join(""));
-        },
-        ""
-      );
-    }
-    // Build font family options:
-    if (d.aspectRatioOpts && d.aspectRatioOpts.length) {
-      $('#aspect-ratio').append(buildOptions(d.aspectRatioOpts)).show();
-    }
-
-    if (d.textShadowEdit) {
-      $('#text-shadow').parent().show();
-    }
-
-    // Build text alignment options:
-    if (d.textAlignOpts && d.textAlignOpts.length) {
-      $('#text-align').append(buildOptions(d.textAlignOpts)).show();
-    }
-
-    // Build font size options:
-    if (d.fontSizeOpts && d.fontSizeOpts.length) {
-      $('#font-size').append(buildOptions(d.fontSizeOpts)).show();
-    }
-
-    // Build font family options:
-    if (d.fontFamilyOpts && d.fontFamilyOpts.length) {
-      $('#font-family').append(buildOptions(d.fontFamilyOpts)).show();
-    }
-
-    // Build font color options:
-    if (d.fontColorOpts && d.fontColorOpts.length) {
-      var fontOpts = _.reduce(
-        d.fontColorOpts,
-        function(memo, opt) {
-          var color = opt.hasOwnProperty("value") ? opt.value : opt;
-          return (memo +=
-            '<li><label><input class="m-editor__swatch" style="background-color:' +
-            color +
-            '" type="radio" name="font-color" value="' +
-            color +
-            '"></label></li>');
-        },
-        ""
-      );
-
-      $("#font-color").show().find("ul").append(fontOpts);
-    }
-
-    // Build watermark options:
-    if (d.watermarkOpts && d.watermarkOpts.length) {
-      $('#watermark').append(buildOptions(d.watermarkOpts)).show();
-    }
-
-    // Build overlay color options:
-    if (d.overlayColorOpts && d.overlayColorOpts.length) {
-      var overlayOpts = _.reduce(
-        d.overlayColorOpts,
-        function(memo, opt) {
-          var color = opt.hasOwnProperty("value") ? opt.value : opt;
-          return (memo +=
-            '<li><label><input class="m-editor__swatch" style="background-color:' +
-            color +
-            '" type="radio" name="overlay" value="' +
-            color +
-            '"></label></li>');
-        },
-        ""
-      );
-
-      $("#overlay").show().find("ul").append(overlayOpts);
-    }
-
+  /*
   // Build background color options:
   if (d.backgroundColorOpts && d.backgroundColorOpts.length) {
     var backgroundOpts = _.reduce(
@@ -157,10 +95,29 @@ MEME.MemeEditorView = Backbone.View.extend({
 
     $("#background-color").show().find("ul").append(backgroundOpts);
   }
-},
+}, */
 
-  render: function() {
+  render: function(){
     var d = this.model.toJSON();
+    for (var field in d) {
+      if ( d.hasOwnProperty(field) && d[field].hasOwnProperty('inputType') ){
+        // Preselect value if input type is checkbox...
+        if ( d[field]['inputType'] == 'checkbox'){
+          this.$('#' + d[field]["name"]).prop('checked', d[field]["inputValue"]);
+        }
+        // Preselect radio inputs
+        else if ( d[field]['inputType'] == 'radio'){
+          this.$('#' + d[field]["name"]).find('[value="' + d[field]["inputValue"] + '"]').prop("checked", true);
+        }
+        // Prefill all other input types
+        else if ( d[field]['inputType'] == 'text' ){
+          this.$('#' + d[field]["name"]).val( d[field]['inputValue'] );
+        }
+      }
+    }
+  },
+
+  /* render: function() {
     // text inputs
     this.$('#headline').val(d.headlineText);
     this.$('#date-time').val(d.dateTimeText);
@@ -178,9 +135,9 @@ MEME.MemeEditorView = Backbone.View.extend({
     this.$('#text-shadow').prop('checked', d.textShadow);
     this.$('#overlay').find('[value="'+d.overlayColor+'"]').prop('checked', true);
     this.$("#backgroundcolor").find('[value="' + d.backgroundColor + '"]').prop("checked", true);
-  },
+  }, */
 
-  events: {
+  /* events: {
     'input #headline': 'onHeadline',
     'input #date-time': 'onDateTime',
     'input #website-url': 'onWebsiteUrl',
@@ -197,23 +154,61 @@ MEME.MemeEditorView = Backbone.View.extend({
     "change #overlay-alpha": "onOverlayAlpha",
     'change [name="overlay"]': "onOverlayColor",
     'change [name="background-color"]': "onBackgroundColor",
+
     "dragover #dropzone": "onZoneOver",
     "dragleave #dropzone": "onZoneOut",
     "drop #dropzone": "onZoneDrop",
+
     'change #loadinput': 'onFileLoad'
+  }
+    */
+  events: {
+
   },
 
+  createEvents: function(){
+    var d = this.model.toJSON();
+    for (var field in d){
+      if ( d[field].hasOwnProperty('name') ){
+
+        fieldName = d[field]['name'];
+        fieldType = d[field]['inputType'];
+
+        if ( fieldType == "select" ){
+          this.events['change #' + fieldName] = 'on_' + fieldName;
+          this['on_' + fieldName] = function(){
+            this.model.set(fieldName, this.$('#' + fieldName).val());
+          }
+        }
+        else if ( fieldType == "imageUpload" ){
+          this.events['dragover #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_over';
+          this.events['dragleave #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_out';
+          this.events['drop #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_drop';
+          this.events['change #' + fieldName] = 'on_' + fieldName;
+          this['on_' + fieldName] = function(){
+            this.model.set(fieldName, this.$('#' + fieldName).val());
+          }
+        }
+        else {
+          this.events['input #' + fieldName] = 'on_' + fieldName;
+          this['on_' + fieldName] = function(){
+            this.model.set(fieldName, this.$('#' + fieldName).val());
+            console.log(fieldName + ': ' + this.$('#' + fieldName).val());
+          }
+        }
+      }
+    }
+    console.log(this.events);
+    console.log(this);
+  },
+
+
+  /*
   onCredit: function() {
     this.model.set('creditText', this.$('#credit').val());
   },
 
-  onFileLoad: function(evt){
-    input = evt.target
-    if (input.files && input.files[0]) {
-      this.model.loadBackground(input.files[0]);
-      this.$('#dropzone').removeClass('pulse');
-    }
-  },
+
 
   onHeadline: function() {
     this.model.set('headlineText', this.$('#headline').val());
@@ -271,6 +266,15 @@ MEME.MemeEditorView = Backbone.View.extend({
 
   onBackgroundColor: function(evt) {
     this.model.set("backgroundColor", this.$(evt.target).val());
+  },
+  */
+
+  onFileLoad: function(evt){
+    input = evt.target
+    if (input.files && input.files[0]) {
+      this.model.loadBackground(input.files[0]);
+      this.$('#dropzone').removeClass('pulse');
+    }
   },
 
   getDataTransfer: function(evt) {
