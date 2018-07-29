@@ -8,7 +8,7 @@ MEME.MemeEditorView = Backbone.View.extend({
   initialize: function() {
     //this.buildForms();
     this.buildFormsFromConfig();
-    this.createEvents();
+    //this.createEvents();
     this.listenTo(this.model, 'change', this.render);
     this.render();
   },
@@ -162,46 +162,48 @@ MEME.MemeEditorView = Backbone.View.extend({
     'change #loadinput': 'onFileLoad'
   }
     */
-  events: {
-
-  },
-
-  createEvents: function(){
+  events: function(){
     var d = this.model.toJSON();
+    var _eventsObj = {};
     for (var field in d){
-      if ( d[field].hasOwnProperty('name') ){
+      if ( d[field].hasOwnProperty('name') && d[field].hasOwnProperty('inputType')){
 
         fieldName = d[field]['name'];
         fieldType = d[field]['inputType'];
 
         if ( fieldType == "select" ){
-          this.events['change #' + fieldName] = 'on_' + fieldName;
-          this['on_' + fieldName] = function(){
-            this.model.set(fieldName, this.$('#' + fieldName).val());
-          }
+          _eventsObj['change #' + fieldName] = 'onSelect';
+          console.log('select field event set up: ' + fieldName);
+        }
+        else if (fieldType == "text") {
+          _eventsObj['input #' + fieldName] = 'onText';
+          console.log('text field event set up: ' + fieldName);
         }
         else if ( fieldType == "imageUpload" ){
-          this.events['dragover #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_over';
-          this.events['dragleave #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_out';
-          this.events['drop #' + fieldName + '-dropzone'] = 'on_' + fieldName + '_drop';
-          this.events['change #' + fieldName] = 'on_' + fieldName;
-          this['on_' + fieldName] = function(){
-            this.model.set(fieldName, this.$('#' + fieldName).val());
-          }
-        }
-        else {
-          this.events['input #' + fieldName] = 'on_' + fieldName;
-          this['on_' + fieldName] = function(){
-            this.model.set(fieldName, this.$('#' + fieldName).val());
-            console.log(fieldName + ': ' + this.$('#' + fieldName).val());
-          }
+          console.log('imageUpload field event set up: ' + fieldName);
+          _eventsObj['change #' + fieldName] = 'onImage';
+          _eventsObj['dragover #' + fieldName] = 'onImage';
+          _eventsObj['dragleave #' + fieldName] = 'onImage';
+          _eventsObj['drop #' + fieldName] = 'onImage';
         }
       }
     }
-    console.log(this.events);
-    console.log(this);
+    console.log(_eventsObj);
+    return _eventsObj;
   },
-
+  onSelect: function(){
+    console.log( fieldName );
+    console.log('onSelect fired.');
+  },
+  onText: function(){
+    this.model.set( fieldName, this.$('#' + fieldName).val() );
+    console.log( fieldName );
+    console.log('onText fired.');
+  },
+  onImage: function(fieldName){
+    this.model.set( fieldName, this.$('#' + fieldName).val() );
+    console.log('onImageUpload fired.');
+  },
 
   /*
   onCredit: function() {
