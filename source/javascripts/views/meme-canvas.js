@@ -32,12 +32,75 @@ MEME.MemeCanvasView = Backbone.View.extend({
   render: function() {
     // Return early if there is no valid canvas to render:
     if (!this.canvas) return;
-
     // Collect model data:
     var m = this.model;
     var d = this.model.toJSON();
     var ctx = this.canvas.getContext('2d');
     var padding = Math.round(d.width * d.paddingRatio);
+
+    // loop through config file and build the inputs
+    for (var field in d) {
+      if ( d.hasOwnProperty(field) ){
+
+        // Output type: canvas size
+        if ( field["outputType"] == 'canvasSize' ){
+          d.width = field['inputValue']['width'];
+        }
+
+        if ( d[field]["outputType"] == "text"){
+          var maxWidth = d[field]['maxWidth'];
+          var x = padding;
+          var y = (1.5 * padding);
+
+          ctx.font = d[field]['fontSize'] +'pt '+ d[field]['fontFamily'];
+          ctx.fillStyle = d[field]['fontColor'];
+          ctx.textBaseline = 'top';
+
+          // Text alignment:
+          if (d[field]['textAlign'] == 'center') {
+            ctx.textAlign = 'center';
+            x = d.width / 2;
+
+          } else if (d.textAlign == 'right' ) {
+            ctx.textAlign = 'right';
+            x = d.width - padding;
+
+          } else {
+            ctx.textAlign = 'left';
+          }
+
+
+          if ( d[field]['inputValue'] ){
+            var line  = '';
+            var words = d[field]['inputValue'].split(' ');
+            if ( d[field]['textMultiline'] ){
+              for (var n = 0; n < words.length; n++) {
+                var testLine  = line + words[n] + ' ';
+                var metrics   = ctx.measureText( testLine );
+                var testWidth = metrics.width;
+
+                if (testWidth > maxWidth && n > 0) {
+                  ctx.fillText(line, x, y);
+                  line = words[n] + ' ';
+                  y += Math.round(d.fontSize * 1.9);
+                } else {
+                  line = testLine;
+                }
+              }
+
+            } else {
+              line = d[field]['inputValue'];
+            }
+            ctx.fillText(line, x, y);
+          }
+
+
+          // ctx.shadowColor = 'transparent';
+        }
+      }
+    }
+
+
 
     switch (d.aspectRatio) {
       case "us-letter":

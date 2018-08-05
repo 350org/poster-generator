@@ -30,9 +30,9 @@ MEME.MemeEditorView = Backbone.View.extend({
     // loop through config file and build the inputs
     for (var field in d) {
       if ( d.hasOwnProperty(field) ){
-
         // set up wrapper and label for input
-        if ( d[field].hasOwnProperty('name') && d[field].hasOwnProperty('inputType') ){
+        if ( d[field]['name'] && d[field]['inputType'] ){
+          // console.log('entry "name" exists in "' + field + '"');
           editor.append('<div id="' + d[field]["name"] + '-wrapper" class="input-' + d[field]["inputType"] +'">');
           var wrapper = $("#"+ d[field]["name"] + '-wrapper');
           wrapper.append('<label for="' + d[field]["name"] + '">' + d[field]["label"] + '</label>')
@@ -173,14 +173,14 @@ MEME.MemeEditorView = Backbone.View.extend({
 
         if ( fieldType == "select" ){
           _eventsObj['change #' + fieldName] = 'onSelect';
-          console.log('select field event set up: ' + fieldName);
+          console.log('onSelect event attached to "#' + fieldName + '"');
         }
         else if (fieldType == "text") {
           _eventsObj['input #' + fieldName] = 'onText';
-          console.log('text field event set up: ' + fieldName);
+          console.log('onText event attached to "#' + fieldName + '"');
         }
         else if ( fieldType == "imageUpload" ){
-          console.log('imageUpload field event set up: ' + fieldName);
+          console.log('onImageUpload event attached to "#' + fieldName + '"');
           _eventsObj['change #' + fieldName] = 'onImage';
           _eventsObj['dragover #' + fieldName] = 'onImage';
           _eventsObj['dragleave #' + fieldName] = 'onImage';
@@ -192,17 +192,15 @@ MEME.MemeEditorView = Backbone.View.extend({
     return _eventsObj;
   },
   onSelect: function(){
-    console.log( fieldName );
-    console.log('onSelect fired.');
+    console.log('onSelect fired on field "'+ fieldName + '"');
   },
   onText: function(){
     this.model.set( fieldName, this.$('#' + fieldName).val() );
-    console.log( fieldName );
-    console.log('onText fired.');
+    console.log('onText fired on field "'+ fieldName + '"');
   },
   onImage: function(fieldName){
     this.model.set( fieldName, this.$('#' + fieldName).val() );
-    console.log('onImageUpload fired.');
+    console.log('onImage fired on field "'+ fieldName + '"');
   },
 
   /*
